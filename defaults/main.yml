@@ -1,0 +1,15 @@
+---
+k3s_version: latest
+k3s_latest_version_url: https://api.github.com/repos/k3s-io/k3s/releases/latest
+k3s_binary_url: https://github.com/k3s-io/k3s/releases/download/v{{ _k3s_version }}/k3s
+k3s_checksums_url: https://github.com/k3s-io/k3s/releases/download/v{{ _k3s_version }}/sha256sum-amd64.txt
+k3s_checksum: ""
+k3s_is_agent: false
+k3s_config: {}
+
+kubernetes_venv: /opt/kubernetes/venv
+kubernetes_ansible_requirements:
+  - kubernetes
+  - pyyaml
+  - jsonpatch
+kubernetes_kubeconfig: /etc/rancher/k3s/k3s.yaml

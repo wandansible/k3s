@@ -1,0 +1,36 @@
+---
+- name: Install pip dependencies
+  ansible.builtin.apt:
+    name:
+      - python3-pip
+      - python3-venv
+      - python3-setuptools
+    state: present
+
+- name: Create kubernetes venv directory
+  ansible.builtin.file:
+    path: "{{ kubernetes_venv }}"
+    state: directory
+    owner: nobody
+    group: nogroup
+    mode: u=rwx,g=rx,o=rx
+
+- name: Create kubernetes python virtualenv  # noqa package-latest
+  ansible.builtin.pip:
+    name:
+      - setuptools
+      - wheel
+      - pip
+    virtualenv: "{{ kubernetes_venv }}"
+    virtualenv_command: /usr/bin/python3 -m venv
+    state: latest
+  become: true
+  become_user: nobody
+
+- name: Install kubernetes ansible module requirements in kubernetes python virtualenv
+  ansible.builtin.pip:
+    name: "{{ kubernetes_ansible_requirements }}"
+    virtualenv: "{{ kubernetes_venv }}"
+    state: present
+  become: true
+  become_user: nobody
