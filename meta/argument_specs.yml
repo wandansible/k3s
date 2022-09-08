@@ -1,0 +1,59 @@
+---
+argument_specs:
+  main:
+    short_description: Install and configure K3s
+    description: Deploy a host as a K3s server or an agent to add to an existing cluster.
+    options:
+      k3s_version:
+        description: Version to install (use "latest" for the latest version)
+        type: str
+        default: latest
+
+      k3s_latest_version_url:
+        description: URL for the latest version
+        type: str
+        default: https://api.github.com/repos/k3s-io/k3s/releases/latest
+
+      k3s_binary_url:
+        description: URL to download the k3s binary from
+        type: str
+
+      k3s_checksums_url:
+        description: URL to download the k3s sha256 checksum file from
+        type: str
+
+      k3s_checksum:
+        description: |
+          The sha256 checksum of the binary,
+          leave empty to get the checksum from k3s_checksums_url
+        type: str
+
+      k3s_is_agent:
+        description: Set to true if the host is an agent
+        type: bool
+        default: false
+
+      k3s_config:
+        description: |
+          Configuration for k3s,
+          see https://rancher.com/docs/k3s/latest/en/installation/install-options/server-config/
+        type: dict
+
+      kubernetes_venv:
+        description: Directory for the kubernetes python virtual environment
+        type: str
+        default: /opt/kubernetes/venv
+
+      kubernetes_ansible_requirements:
+        description: Python packages required for kubernetes ansible modules
+        type: list
+        elements: str
+        default:
+          - kubernetes
+          - pyyaml
+          - jsonpatch
+
+      kubernetes_kubeconfig:
+        description: Path to kubeconfig file
+        type: str
+        default: /etc/rancher/k3s/k3s.yaml
